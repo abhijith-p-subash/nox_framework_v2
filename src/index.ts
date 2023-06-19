@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cros from "cors";
 import dotenv from "dotenv";
+import hpp from "hpp";
 
 import routes from "./api/routes/index.js";
 import mongoConnection from "./config/mongo.js";
@@ -18,6 +19,7 @@ app.use(cros());
 app.use(morgan("tiny"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(hpp());
 app.set("view engine", "ejs");
 
 app.disable("x-powered-by");
