@@ -1,8 +1,9 @@
 import { connect } from "mongoose";
+import "dotenv/config";
 
 const mongoConnection = async () => {
   try {
-    const mongoURI: string = "mongodb://127.0.0.1:27017/nox_v2_mongo";
+    const mongoURI: string = `${process.env.MONGO_URI}`;
     await connect(mongoURI);
     // console.log("MongoDB Connected...");
   } catch (error) {
