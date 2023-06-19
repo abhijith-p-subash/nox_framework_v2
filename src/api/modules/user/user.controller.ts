@@ -2,32 +2,28 @@ import { Request, Response } from "express";
 import { UserModel } from "./entities/user.entity.js";
 import { UserService } from "./user.service.js";
 import { Job } from "../../../utils/job.js";
-import { ValidationError } from "../../../utils/errors.js";
+import { NotFoundError, ValidationError } from "../../../utils/errors.js";
 import {
   BadRequest,
   Created,
   ErrorResponse,
+  NotFound,
   Result,
 } from "../../../utils/response.js";
 import { queryValidation } from "../../../utils/validation.js";
+import { v4 as uuidv4 } from "uuid";
 
+const userService = new UserService(UserModel);
 export class UserController {
-  userService: UserService;
-  // constructor(private userService = new UserService(UserModel)) {
-  //   userService;
-  // }
-  constructor() {
-    this.userService = new UserService(UserModel);
-  }
-
   /**
    * Create User
    */
   async create(req: Request, res: Response) {
-    const { data, error } = await this.userService.create(
+    const { data, error } = await userService.create(
       new Job({
         action: "create",
         body: {
+          uid: uuidv4(),
           ...req.body,
         },
       })
@@ -52,28 +48,169 @@ export class UserController {
    * Return all Users list
    */
   async getAll(req: Request, res: Response) {
-    const resp = await this.userService.testApi();
-    console.log("kkkkkkkkkkkkkkk");
-    res.send(resp);
+    const { data, count, limit, offset, error } = await userService.findAll(
+      new Job({
+        action: "findAll",
+        options: {
+          ...queryValidation(req.query),
+        },
+      })
+    );
+    if (!!error) {
+      return ErrorResponse(res, {
+        error,
+        message: `${error.message || error}`,
+      });
+    }
+    return Result(res, {
+      data: { user: data, count, limit, offset },
+      message: "Ok",
+    });
+  }
 
-    // const { data, count, limit, offset, error } =
-    //   await this.userService.findAll(
-    //     new Job({
-    //       action: "findAll",
-    //       options: {
-    //         ...queryValidation(req.query),
-    //       },
-    //     })
-    //   );
-    // if (!!error) {
-    //   return ErrorResponse(res, {
-    //     error,
-    //     message: `${error.message || error}`,
-    //   });
-    // }
-    // return Result(res, {
-    //   data: { user: data, count, limit, offset },
-    //   message: "Ok",
-    // });
+  /**
+   * Return User Count
+   */
+  async getCount(req: Request, res: Response) {
+    queryValidation(req.query);
+    const { data, count, limit, offset, error } = await userService.getCount(
+      new Job({
+        action: "getCount",
+        options: {
+          ...queryValidation(req.query),
+        },
+      })
+    );
+    if (!!error) {
+      return ErrorResponse(res, {
+        error,
+        message: `${error.message || error}`,
+      });
+    }
+    return Result(res, {
+      data: { user: data, count, limit, offset },
+      message: "Ok",
+    });
+  }
+
+  /**
+   * Return Users By Id
+   */
+  async getById(req: Request, res: Response) {
+    const { data, error } = await userService.findById(
+      new Job({
+        action: "findById",
+        id: +req.params.id,
+        options: {
+          ...queryValidation(req.query),
+        },
+      })
+    );
+    if (!!error) {
+      if (error instanceof NotFoundError) {
+        return NotFound(res, {
+          error,
+          message: `Record Not found`,
+        });
+      }
+      return ErrorResponse(res, {
+        error,
+        message: `${error.message || error}`,
+      });
+    }
+    return Result(res, {
+      data: { user: data },
+      message: "Ok",
+    });
+  }
+
+  /**
+   * Return User with parameter
+   */
+  async getOne(req: Request, res: Response) {
+    const { data, error } = await userService.findOne(
+      new Job({
+        action: "findOne",
+        options: {
+          ...queryValidation(req.query),
+        },
+      })
+    );
+    if (!!error) {
+      if (error instanceof NotFoundError) {
+        return NotFound(res, {
+          error,
+          message: `Record Not found`,
+        });
+      }
+      return ErrorResponse(res, {
+        error,
+        message: `${error.message || error}`,
+      });
+    }
+    return Result(res, {
+      data: { user: data },
+      message: "Ok",
+    });
+  }
+
+  /**
+   * Update User
+   */
+  async update(req: Request, res: Response) {
+    const { data, error } = await userService.update(
+      new Job({
+        action: "update",
+        id: +req.params.id,
+        body: req.body,
+      })
+    );
+    if (!!error) {
+      if (error instanceof NotFoundError) {
+        return NotFound(res, {
+          error,
+          message: `Record Not found`,
+        });
+      }
+      return ErrorResponse(res, {
+        error,
+        message: `${error.message || error}`,
+      });
+    }
+    return Result(res, {
+      data: { user: data },
+      message: "Updated",
+    });
+  }
+
+  /**
+   * Delete User
+   */
+  async deleteOne(req: Request, res: Response) {
+    const { data, error } = await userService.delete(
+      new Job({
+        action: "delete",
+        id: +req.params.id,
+        options: {
+          ...queryValidation(req.query),
+        },
+      })
+    );
+    if (!!error) {
+      if (error instanceof NotFoundError) {
+        return NotFound(res, {
+          error,
+          message: `Record Not found`,
+        });
+      }
+      return ErrorResponse(res, {
+        error,
+        message: `${error.message || error}`,
+      });
+    }
+    return Result(res, {
+      data: { user: data },
+      message: "Deleted",
+    });
   }
 }

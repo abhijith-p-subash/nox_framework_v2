@@ -6,6 +6,7 @@ import cros from "cors";
 import dotenv from "dotenv";
 
 import routes from "./api/routes/index.js";
+import mongoConnection from "./config/mongo.js";
 
 dotenv.config();
 
@@ -30,6 +31,18 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
-});
+const start = async (): Promise<void> => {
+  try {
+    await mongoConnection().then(() => {
+      console.log("\x1b[32m", "MogoDB Connected");
+    });
+    app.listen(PORT, () => {
+      console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+void start();
