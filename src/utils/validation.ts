@@ -20,8 +20,7 @@ export const isEmptyObject = (obj: any) => {
   return true;
 };
 
-
 export const isStringBoolean = (val: string | boolean) => {
-  if (val === 'true') return true;
-  if (val === 'false') return false;
-}
+  if (val === "true") return true;
+  if (val === "false") return false;
+};

@@ -6,8 +6,13 @@ import cros from "cors";
 import dotenv from "dotenv";
 import hpp from "hpp";
 
-import routes from "./api/routes/index.js";
+import routes from "./api/routes/index.routes.js";
 import mongoConnection from "./config/mongo.js";
+import redisClient from "./config/redis.js";
+
+import passport from "passport";
+import { jwtAuth } from "./api/modules/auth/jwt/jwt.strategy.js";
+import { localAuth } from "./api/modules/auth/local/local.strategy.js";
 
 dotenv.config();
 
@@ -21,6 +26,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(hpp());
 app.set("view engine", "ejs");
+app.use(express.static("public"));
+passport.use(jwtAuth);
+passport.use(localAuth);
+app.use(passport.initialize());
 
 app.disable("x-powered-by");
 
@@ -37,6 +46,9 @@ const start = async (): Promise<void> => {
   try {
     await mongoConnection().then(() => {
       console.log("\x1b[32m", "MogoDB Connected");
+    });
+    await redisClient.connect().then(() => {
+      console.log("\x1b[32m", "Redis Client Connected");
     });
     app.listen(PORT, () => {
       console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
