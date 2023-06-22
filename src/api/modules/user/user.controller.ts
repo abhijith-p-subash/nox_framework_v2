@@ -100,7 +100,7 @@ export class UserController {
     const { data, error } = await userService.findById(
       new Job({
         action: "findById",
-        id: +req.params.id,
+        id: req.params.id,
         options: {
           ...queryValidation(req.query),
         },

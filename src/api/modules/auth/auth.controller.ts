@@ -17,12 +17,11 @@ export class AuthController {
     Credentials: Username, password
     */
   async logIn(req: Request, res: Response) {
-    let user: { id: number } | any = req.user;
-    console.log("REQ USER", req.user);
-
+    let user: { _id: number | number } | any = req.user;
+    const _id = user._id.toString();
     const { data, error } = await authService.createUserSession(
       new Job({
-        id: user.id,
+        id: _id,
         body: req.user,
       })
     );

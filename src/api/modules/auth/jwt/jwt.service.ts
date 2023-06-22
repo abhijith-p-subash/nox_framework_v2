@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import redisClient from "../../../../config/redis.js";
 
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 
 export class JWTService {
   async createToken(userId: number | string, expireTime: string, key?: string) {

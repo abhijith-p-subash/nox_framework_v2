@@ -7,8 +7,6 @@ const LocalStrategy = passportLocal.Strategy;
 const userService = new UserService(UserModel);
 
 export const localAuth = new LocalStrategy(async (username, password, done) => {
-  console.log(username);
-
   const { data, error } = await userService.findOne(
     new Job({
       action: "findOne",
@@ -19,8 +17,6 @@ export const localAuth = new LocalStrategy(async (username, password, done) => {
       },
     })
   );
-
-  console.log("USER DATA", data);
 
   if (!!error) {
     return done(error, false);
