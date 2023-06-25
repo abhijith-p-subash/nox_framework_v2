@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { UserService } from "../user/user.service";
 import { JWTService } from "./jwt/jwt.service";
 import { Job } from "../../../core/utils/job";
-import { UserModel } from "../user/entities/user.entity";
+import { UserModel } from "../user/entities/user.model";
 
 const userService = new UserService(UserModel);
 // const loginLogService = new LoginLogService(LoginLogModel);
