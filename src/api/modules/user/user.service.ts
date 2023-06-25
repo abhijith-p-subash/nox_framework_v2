@@ -1,4 +1,4 @@
-import { ModelService } from "../../../core/mongo/model.service";
+import { ModelService } from "../../../core/modules/mongo/model.service";
 
 export class UserService extends ModelService {
   constructor(userModel: any) {

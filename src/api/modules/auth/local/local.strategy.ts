@@ -1,6 +1,6 @@
 import passportLocal from "passport-local";
 import { UserService } from "../../user/user.service";
-import { Job } from "../../../../utils/job";
+import { Job } from "../../../../core/utils/job";
 import { UserModel } from "../../user/entities/user.entity";
 
 const LocalStrategy = passportLocal.Strategy;

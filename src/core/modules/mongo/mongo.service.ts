@@ -1,4 +1,4 @@
-import { isEmptyObject } from "./../../utils/validation";
+import { isEmptyObject } from "../../utils/validation";
 import { NotFoundError } from "../../utils/errors";
 import { Job, JobResponse } from "../../utils/job";
 
