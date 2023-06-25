@@ -16,6 +16,9 @@ export class EmailService {
     },
   });
 
+  /* 
+  ACTION: Send Email
+  */
   async sendEmail(job: Job) {
     const mailData = job.body;
     const mailOPtions = {
@@ -34,4 +37,9 @@ export class EmailService {
       throw error;
     }
   }
+
+  /* 
+  ACTION: Send Bulk Email
+  */
+  async sendBulkEmail(job: Job) {}
 }
