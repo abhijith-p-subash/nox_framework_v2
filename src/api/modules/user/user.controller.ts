@@ -9,8 +9,8 @@ import {
   ErrorResponse,
   NotFound,
   Result,
-} from "../../../utils/response.js";
-import { queryValidation } from "../../../utils/validation.js";
+} from "../../../utils/response";
+import { queryValidation } from "../../../utils/validation";
 import { v4 as uuidv4 } from "uuid";
 
 const userService = new UserService(UserModel);
