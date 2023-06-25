@@ -7,15 +7,15 @@ const authRouter = Router();
 const userController = new UserController();
 const authController = new AuthController();
 
-authRouter.post("/signup", authController.signUp);
+authRouter.post("/signup", authController.signup);
 
 authRouter.post(
   "/login",
   passport.authenticate("local", { session: false }),
-  authController.logIn
+  authController.login
 );
 
-authRouter.get("/logout", authController.logOut);
+authRouter.get("/logout", authController.logout);
 
 // authRouter.post(
 //   "/send-verification-email/:id",

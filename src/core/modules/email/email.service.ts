@@ -31,10 +31,13 @@ export class EmailService {
     try {
       const info = await this.transporter.sendMail(mailOPtions);
       console.log(info);
-      return info;
+      return {
+        data: info,
+        message: "Email Send",
+      };
     } catch (error) {
       console.error(error);
-      throw error;
+      return { error };
     }
   }
 
