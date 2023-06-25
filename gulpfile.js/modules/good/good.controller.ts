@@ -1,11 +1,6 @@
 import { Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
-
-import { queryValidation } from "./../../../core/utils/validation";
-import { NotFoundError, ValidationError } from "./../../../core/utils/errors";
-import { Good } from "./entity/good.model";
 import { Job } from "../../../core/utils/job";
-import { GoodService } from "./good.service";
+import { NotFoundError, ValidationError } from "../../../core/utils/errors";
 import {
   BadRequest,
   Created,
@@ -13,6 +8,10 @@ import {
   NotFound,
   Result,
 } from "../../../core/utils/response";
+import { queryValidation } from "../../../core/utils/validation";
+
+import { Good } from "./entity/good.model";
+import { GoodService } from "./good.service";
 
 const goodService = new GoodService(Good);
 
@@ -28,7 +27,6 @@ export class GoodController {
       new Job({
         action: "create",
         body: {
-          uid: uuidv4(),
           ...req.body,
         },
       })

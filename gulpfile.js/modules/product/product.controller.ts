@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { ValidationError } from "sequelize";
-import { NotFoundError } from "../../../core/utils/errors";
-import { Job, JobResponse } from "../../../core/utils/job";
+import { Job } from "../../../core/utils/job";
+import { NotFoundError, ValidationError } from "../../../core/utils/errors";
 import {
   BadRequest,
   Created,
@@ -10,12 +9,11 @@ import {
   Result,
 } from "../../../core/utils/response";
 import { queryValidation } from "../../../core/utils/validation";
-import { ProductModel, Product } from "./entity/product.model";
+
+import { ProductModel } from "./entity/product.model";
 import { ProductService } from "./product.service";
 
-
 const productService = new ProductService(ProductModel);
-
 
 export class ProductController {
   /**
@@ -76,15 +74,14 @@ export class ProductController {
    */
   async getCount(req: Request, res: Response) {
     queryValidation(req.query);
-    const { data, count, limit, offset, error } =
-      await productService.getCount(
-        new Job({
-          action: "getCount",
-          options: {
-            ...queryValidation(req.query),
-          },
-        })
-      );
+    const { data, count, limit, offset, error } = await productService.getCount(
+      new Job({
+        action: "getCount",
+        options: {
+          ...queryValidation(req.query),
+        },
+      })
+    );
     if (!!error) {
       return ErrorResponse(res, {
         error,
