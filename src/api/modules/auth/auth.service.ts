@@ -5,9 +5,11 @@ import { JWTService } from "./jwt/jwt.service";
 import { Job } from "../../../core/utils/job";
 import { UserModel } from "../user/entities/user.model";
 import { EmailService } from "../../../core/modules/email/email.service";
+import { LoginLogService } from "../loginLog/loginLog.service";
+import { LoginLogModel } from "../loginLog/entity/loginLog.model";
 
 const userService = new UserService(UserModel);
-// const loginLogService = new LoginLogService(LoginLogModel);
+const loginLogService = new LoginLogService(LoginLogModel);
 const jwtService = new JWTService();
 const emailService = new EmailService();
 
@@ -70,6 +72,7 @@ export class AuthService {
         id: _id,
       })
     );
+
     if (!!error) {
       return { error: "Account does not exist" };
     } else {
@@ -79,18 +82,18 @@ export class AuthService {
       const token = await jwtService.createToken(_id, "1h");
       const refreshToken = await jwtService.createRefreshToken(_id);
 
-      //   const loginLogs = await loginLogService.create(
-      //     new Job({
-      //       action: "create",
-      //       body: {
-      //         name: jobBody.full_name,
-      //         user_id: +id,
-      //       },
-      //     })
-      //   );
+      const loginLogs = await loginLogService.create(
+        new Job({
+          action: "create",
+          body: {
+            user_name: data.name,
+            user_id: _id,
+          },
+        })
+      );
 
-      //   if (loginLogs.error)
-      //     return { error: true, message: "Failed to register Login Logs" };
+      if (loginLogs.error)
+        return { error: true, message: "Failed to register Login Logs" };
 
       return {
         error: false,

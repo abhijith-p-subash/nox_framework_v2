@@ -1,3 +1,4 @@
+import loginLogRouter from "./route/loginLog.routes";
 import { Router } from "express";
 import passport from "passport";
 import userRouter from "./route/user.routes";
@@ -13,3 +14,8 @@ routes.use(
 );
 
 export default routes;
+routes.use(
+  "/loginLog",
+  passport.authenticate("jwt", { session: false }),
+  loginLogRouter
+);
