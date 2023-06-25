@@ -1,0 +1,3 @@
+interface IProduct {
+  name: string;
+}

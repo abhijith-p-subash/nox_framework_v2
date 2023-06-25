@@ -14,7 +14,7 @@ import { generateHash, uuid } from "../../../../core/utils/helpers";
     this.password = await generateHash(this.password);
   }
 })
-export class User extends ParentSchema {
+export class User extends ParentSchema implements IUser {
   @prop({ type: String })
   public uid!: string;
 
@@ -40,7 +40,7 @@ export class User extends ParentSchema {
   public phone!: string;
 
   @prop({ type: Boolean })
-  public verified!: Boolean;
+  public verified!: boolean;
 }
 
 export const UserModel = getModelForClass(User);

@@ -1,11 +1,19 @@
 import { prop, getModelForClass } from "@typegoose/typegoose";
 
-export class ParentSchema {
+interface IParentSchema {
+  active: boolean;
+  created_at: Date;
+  created_by: string;
+  updated_at: Date;
+  updated_by: string;
+}
+
+export class ParentSchema implements IParentSchema {
   //   @prop({ type: String, required: true })
   //   public _id!: string;
 
   @prop({ type: Boolean })
-  public active!: Boolean;
+  public active!: boolean;
 
   @prop({ type: Date, required: true, default: Date.now })
   public created_at!: Date;
