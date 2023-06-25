@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { UserModel } from "./entities/user.entity";
-import { UserService } from "./user.service";
 import { Job } from "../../../core/utils/job";
 import { NotFoundError, ValidationError } from "../../../core/utils/errors";
 import {
@@ -11,6 +9,10 @@ import {
   Result,
 } from "../../../core/utils/response";
 import { queryValidation } from "../../../core/utils/validation";
+
+import { UserModel } from "./entities/user.model";
+import { UserService } from "./user.service";
+
 import { v4 as uuidv4 } from "uuid";
 
 const userService = new UserService(UserModel);
