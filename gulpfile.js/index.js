@@ -32,75 +32,120 @@ const ucText = lcText
 const lcfucText = ucText.charAt(0).toLowerCase() + ucText.slice(1);
 
 gulp.task("new", function () {
-  if (!!options.mongo) {
-    const imprt = `import ${lcText}Router from "./route/${lcText}.routes";`;
-    const routes = `routes.use("/${lcText}",passport.authenticate("jwt", { session: false }),${lcText}Router);`;
-    return (
-      gulp
-        .src("gulpfile.js/modules/product/**/*")
-        .pipe(
-          rename(function (path) {
-            path.basename = path.basename.replace("product", options.module);
-          })
-        )
-        .pipe(replace("productService", `${lcfucText}Service`))
-        .pipe(replace("product", lcText))
-        .pipe(replace("Product", ucText))
-        .pipe(prettier())
-        .pipe(gulp.dest(`./src/api/modules/${lcText}/`)),
-      gulp
-        .src("gulpfile.js/modules/root.routes.ts")
-        .pipe(
-          rename(function (path) {
-            path.basename = path.basename.replace("root", options.module);
-          })
-        )
-        .pipe(replace("root.routes", `${lcfucText}.routes`))
-        .pipe(replace("root", lcText))
-        .pipe(replace("Root", ucText))
-        .pipe(prettier())
-        .pipe(gulp.dest(`./src/api/routes/route`)),
-      gulp
-        .src("./src/api/routes/index.routes.ts")
-        .pipe(insert.prepend(`${imprt}`))
-        .pipe(insert.append(`${routes}`))
-        .pipe(prettier())
-        .pipe(gulp.dest("./src/api/routes"))
-    );
-  } else {
-    const imprt = `import ${lcText}Router from "./route/${lcText}.routes";`;
-    const routes = `routes.use("/${lcText}",passport.authenticate("jwt", { session: false }),${lcText}Router);`;
-    return (
-      gulp
-        .src("gulpfile.js/modules/good/**/*")
-        .pipe(
-          rename(function (path) {
-            path.basename = path.basename.replace("good", options.module);
-          })
-        )
-        .pipe(replace("goodService", `${lcfucText}Service`))
-        .pipe(replace("good", lcText))
-        .pipe(replace("Good", ucText))
-        .pipe(prettier())
-        .pipe(gulp.dest(`./src/api/modules/${lcText}/`)),
-      gulp
-        .src("gulpfile.js/modules/root.routes.ts")
-        .pipe(
-          rename(function (path) {
-            path.basename = path.basename.replace("root", options.module);
-          })
-        )
-        .pipe(replace("root.routes", `${lcfucText}.routes`))
-        .pipe(replace("root", lcText))
-        .pipe(replace("Root", ucText))
-        .pipe(prettier())
-        .pipe(gulp.dest(`./src/api/routes/route`)),
-      gulp
-        .src("./src/api/routes/index.routes.ts")
-        .pipe(insert.prepend(`${imprt}`))
-        .pipe(insert.append(`${routes}`))
-        .pipe(prettier())
-        .pipe(gulp.dest("./src/api/routes"))
-    );
-  }
+  /* 
+  In this version MongoDB is the only Db using  here,
+  Rightnow below mention script is used to create modules
+  */
+  const imprt = `import ${lcText}Router from "./route/${lcText}.routes";`;
+  const routes = `routes.use("/${lcText}",passport.authenticate("jwt", { session: false }),${lcText}Router);`;
+  return (
+    gulp
+      .src("gulpfile.js/modules/product/**/*")
+      .pipe(
+        rename(function (path) {
+          path.basename = path.basename.replace("product", options.module);
+        })
+      )
+      .pipe(replace("productService", `${lcfucText}Service`))
+      .pipe(replace("product", lcText))
+      .pipe(replace("Product", ucText))
+      .pipe(prettier())
+      .pipe(gulp.dest(`./src/api/modules/${lcText}/`)),
+    gulp
+      .src("gulpfile.js/modules/root.routes.ts")
+      .pipe(
+        rename(function (path) {
+          path.basename = path.basename.replace("root", options.module);
+        })
+      )
+      .pipe(replace("root.routes", `${lcfucText}.routes`))
+      .pipe(replace("root", lcText))
+      .pipe(replace("Root", ucText))
+      .pipe(prettier())
+      .pipe(gulp.dest(`./src/api/routes/route`)),
+    gulp
+      .src("./src/api/routes/index.routes.ts")
+      .pipe(insert.prepend(`${imprt}`))
+      .pipe(insert.append(`${routes}`))
+      .pipe(prettier())
+      .pipe(gulp.dest("./src/api/routes"))
+  );
+
+  /* 
+  
+  This Script is used in the previous version of the NOX framework
+  SQL and MongoDB
+  */
+
+  // if (!!options.mongo) {
+  //   const imprt = `import ${lcText}Router from "./route/${lcText}.routes";`;
+  //   const routes = `routes.use("/${lcText}",passport.authenticate("jwt", { session: false }),${lcText}Router);`;
+  //   return (
+  //     gulp
+  //       .src("gulpfile.js/modules/product/**/*")
+  //       .pipe(
+  //         rename(function (path) {
+  //           path.basename = path.basename.replace("product", options.module);
+  //         })
+  //       )
+  //       .pipe(replace("productService", `${lcfucText}Service`))
+  //       .pipe(replace("product", lcText))
+  //       .pipe(replace("Product", ucText))
+  //       .pipe(prettier())
+  //       .pipe(gulp.dest(`./src/api/modules/${lcText}/`)),
+  //     gulp
+  //       .src("gulpfile.js/modules/root.routes.ts")
+  //       .pipe(
+  //         rename(function (path) {
+  //           path.basename = path.basename.replace("root", options.module);
+  //         })
+  //       )
+  //       .pipe(replace("root.routes", `${lcfucText}.routes`))
+  //       .pipe(replace("root", lcText))
+  //       .pipe(replace("Root", ucText))
+  //       .pipe(prettier())
+  //       .pipe(gulp.dest(`./src/api/routes/route`)),
+  //     gulp
+  //       .src("./src/api/routes/index.routes.ts")
+  //       .pipe(insert.prepend(`${imprt}`))
+  //       .pipe(insert.append(`${routes}`))
+  //       .pipe(prettier())
+  //       .pipe(gulp.dest("./src/api/routes"))
+  //   );
+  // } else {
+  //   const imprt = `import ${lcText}Router from "./route/${lcText}.routes";`;
+  //   const routes = `routes.use("/${lcText}",passport.authenticate("jwt", { session: false }),${lcText}Router);`;
+  //   return (
+  //     gulp
+  //       .src("gulpfile.js/modules/good/**/*")
+  //       .pipe(
+  //         rename(function (path) {
+  //           path.basename = path.basename.replace("good", options.module);
+  //         })
+  //       )
+  //       .pipe(replace("goodService", `${lcfucText}Service`))
+  //       .pipe(replace("good", lcText))
+  //       .pipe(replace("Good", ucText))
+  //       .pipe(prettier())
+  //       .pipe(gulp.dest(`./src/api/modules/${lcText}/`)),
+  //     gulp
+  //       .src("gulpfile.js/modules/root.routes.ts")
+  //       .pipe(
+  //         rename(function (path) {
+  //           path.basename = path.basename.replace("root", options.module);
+  //         })
+  //       )
+  //       .pipe(replace("root.routes", `${lcfucText}.routes`))
+  //       .pipe(replace("root", lcText))
+  //       .pipe(replace("Root", ucText))
+  //       .pipe(prettier())
+  //       .pipe(gulp.dest(`./src/api/routes/route`)),
+  //     gulp
+  //       .src("./src/api/routes/index.routes.ts")
+  //       .pipe(insert.prepend(`${imprt}`))
+  //       .pipe(insert.append(`${routes}`))
+  //       .pipe(prettier())
+  //       .pipe(gulp.dest("./src/api/routes"))
+  //   );
+  // }
 });
