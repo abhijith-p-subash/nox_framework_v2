@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
-import userRouter from "./route/user.routes.js";
-import authRouter from "./route/auth.routes.js";
+import userRouter from "./route/user.routes";
+import authRouter from "./route/auth.routes";
 
 const routes = Router();
 

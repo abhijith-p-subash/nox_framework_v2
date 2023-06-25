@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { UserModel } from "./entities/user.entity.js";
-import { UserService } from "./user.service.js";
-import { Job } from "../../../utils/job.js";
-import { NotFoundError, ValidationError } from "../../../utils/errors.js";
+import { UserModel } from "./entities/user.entity";
+import { UserService } from "./user.service";
+import { Job } from "../../../utils/job";
+import { NotFoundError, ValidationError } from "../../../utils/errors";
 import {
   BadRequest,
   Created,

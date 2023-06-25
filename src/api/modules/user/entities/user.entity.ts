@@ -1,6 +1,6 @@
 import { prop, getModelForClass, pre } from "@typegoose/typegoose";
-import { ParentSchema } from "../../../../core/mongo/parent-schema.js";
-import { generateHash, uuid } from "../../../../utils/helpers.js";
+import { ParentSchema } from "../../../../core/mongo/parent-schema";
+import { generateHash, uuid } from "../../../../utils/helpers";
 
 @pre<User>("save", async function () {
   this.uid = uuid();

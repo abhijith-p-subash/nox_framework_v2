@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import passport from "passport";
-import { UserController } from "../../modules/user/user.controller.js";
-import { AuthController } from "../../modules/auth/auth.controller.js";
+import { UserController } from "../../modules/user/user.controller";
+import { AuthController } from "../../modules/auth/auth.controller";
 
 const authRouter = Router();
 const userController = new UserController();

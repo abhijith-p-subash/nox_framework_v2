@@ -1,6 +1,6 @@
-import { isEmptyObject } from "./../../utils/validation.js";
-import { NotFoundError } from "../../utils/errors.js";
-import { Job, JobResponse } from "../../utils/job.js";
+import { isEmptyObject } from "./../../utils/validation";
+import { NotFoundError } from "../../utils/errors";
+import { Job, JobResponse } from "../../utils/job";
 
 export class MongoService {
   constructor(private readonly model: any) {}

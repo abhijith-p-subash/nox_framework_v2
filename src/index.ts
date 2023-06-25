@@ -6,13 +6,13 @@ import cros from "cors";
 import dotenv from "dotenv";
 import hpp from "hpp";
 
-import routes from "./api/routes/index.routes.js";
-import mongoConnection from "./config/mongo.js";
-import redisClient from "./config/redis.js";
+import routes from "./api/routes/index.routes";
+import mongoConnection from "./config/mongo";
+import redisClient from "./config/redis";
 
 import passport from "passport";
-import { jwtAuth } from "./api/modules/auth/jwt/jwt.strategy.js";
-import { localAuth } from "./api/modules/auth/local/local.strategy.js";
+import { jwtAuth } from "./api/modules/auth/jwt/jwt.strategy";
+import { localAuth } from "./api/modules/auth/local/local.strategy";
 
 dotenv.config();
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { AuthService } from "./auth.service.js";
-import { Result, Unauthorized } from "../../../utils/response.js";
-import { Job } from "../../../utils/job.js";
+import { AuthService } from "./auth.service";
+import { Result, Unauthorized } from "../../../utils/response";
+import { Job } from "../../../utils/job";
 
 const authService = new AuthService();
 

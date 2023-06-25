@@ -1,9 +1,9 @@
 import { JwtPayload } from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
-import { UserService } from "../user/user.service.js";
-import { JWTService } from "./jwt/jwt.service.js";
-import { Job } from "../../../utils/job.js";
-import { UserModel } from "../user/entities/user.entity.js";
+import { UserService } from "../user/user.service";
+import { JWTService } from "./jwt/jwt.service";
+import { Job } from "../../../utils/job";
+import { UserModel } from "../user/entities/user.entity";
 
 const userService = new UserService(UserModel);
 // const loginLogService = new LoginLogService(LoginLogModel);

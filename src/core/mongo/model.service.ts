@@ -1,5 +1,5 @@
-import { MongoService } from "./mongo.service.js";
-import { Job, JobResponse } from "../../utils/job.js";
+import { MongoService } from "./mongo.service";
+import { Job, JobResponse } from "../../utils/job";
 
 export abstract class ModelService extends MongoService {
   constructor(model: any) {

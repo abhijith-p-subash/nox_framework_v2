@@ -1,8 +1,8 @@
 import passport from "passport";
 import passportJwt, { ExtractJwt } from "passport-jwt";
-import { UserService } from "../../user/user.service.js";
-import { UserModel } from "../../user/entities/user.entity.js";
-import { Job } from "../../../../utils/job.js";
+import { UserService } from "../../user/user.service";
+import { UserModel } from "../../user/entities/user.entity";
+import { Job } from "../../../../utils/job";
 
 const JwtStrategy = passportJwt.Strategy;
 const userService = new UserService(UserModel);
