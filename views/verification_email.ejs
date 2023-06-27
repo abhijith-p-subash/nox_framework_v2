@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NOEX Framework - User Verification</title>
+    <style>
+      /* Global styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f8fd;
+        padding: 20px;
+        margin: 0;
+      }
+
+      /* Container styles */
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Header styles */
+      .header {
+        background-color: #00a8ff;
+        color: #ffffff;
+        padding: 20px;
+        text-align: center;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      /* Content styles */
+      .content {
+        padding: 40px 20px; /* Increase the padding to add more height */
+        color: #000000;
+      }
+
+      .content p {
+        margin: 17px auto;
+      }
+
+      .content .otp {
+        font-size: 30px;
+        text-align: center;
+        color: #00a8ff;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+      }
+
+      .content .verify-button {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        background-color: #00a8ff;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .content .verify-button:hover {
+        background-color: #0077b6;
+      }
+
+      .tnks {
+        flex-direction: column;
+        margin: 5px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>NOEX Framework</h1>
+      </div>
+      <div class="content">
+        <div>
+          <p>Thank you for signing up!</p>
+          <p>Please use the following OTP to verify your account:</p>
+          <div class="otp"><b><%= otp %></b></div>
+        </div>
+        <div>
+          <p>To verify your account, click the button below:</p>
+          <a class="verify-button" href="<%= verificationLink %>"
+            >Verify Account</a
+          >
+        </div>
+        <div class="tnks">
+          <p><b>The NOEX Team</b></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

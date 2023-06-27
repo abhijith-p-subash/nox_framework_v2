@@ -1,5 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
+import fs from "fs";
+import ejs from "ejs";
 import { UserService } from "../user/user.service";
 import { JWTService } from "./jwt/jwt.service";
 import { Job } from "../../../core/utils/job";
@@ -107,6 +109,7 @@ export class AuthService {
   */
   async sendVerificationEmail(job: Job) {
     try {
+      const template = fs.readFileSync("views/verification_email.ejs", "utf-8");
       const OTP = Math.floor(100000 + Math.random() * 90000),
         verificationToken = await jwtService.createToken(
           job.id || "",
@@ -116,14 +119,17 @@ export class AuthService {
         protocol = job.body?.protocol,
         host = job.body?.host,
         verificationLink = `${protocol}://${host}/auth/email-verification/${verificationToken}`,
-        htmlBody = `<h1>OTP:${OTP}  </h1><br><p>${verificationLink}</p>`,
+        htmlBody = ejs.render(template, {
+          otp: OTP,
+          verificationLink: verificationLink,
+        }),
         emailJob = new Job({
           action: "sendMail",
           payload: {
             toEmail: job.body?.toEmail,
           },
           body: {
-            subject: "User Verification [NOX_Framework v1.0.0]",
+            subject: "NOEX Framework Account Verification Required",
             OTP: OTP,
             link: verificationLink,
             toEmail: job.body?.toEmail,
