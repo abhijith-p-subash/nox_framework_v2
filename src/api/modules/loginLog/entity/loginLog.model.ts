@@ -1,6 +1,6 @@
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { ParentSchema } from "../../../../core/modules/mongo/parent-schema";
-import { User } from "../../user/entities/user.model";
+import { ILoginLog } from "./loginLog.type";
 
 export class LoginLog extends ParentSchema implements ILoginLog {
   @prop({ type: String })
