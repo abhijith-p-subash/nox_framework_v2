@@ -50,6 +50,8 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "razorpay": "^2.8.6",
+    "razorpay-typescript": "^1.0.12",
     "redis": "^4.6.7",
     "rimraf": "^5.0.1",
     "uuid": "^9.0.0"
