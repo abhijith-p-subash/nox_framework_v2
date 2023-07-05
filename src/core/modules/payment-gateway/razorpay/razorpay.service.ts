@@ -43,10 +43,10 @@ export class RazorpayService {
   /* 
   Get a particular payment
   */
-  async get(job: Job): Promise<any> {
+  async getParticularPayment(job: Job): Promise<any> {
     return new Promise((resolve, reject) => {
       rzp.payments
-        .fetch(job.options?.where?.id)
+        .fetch(job.options?.where?.rzp_payment_id)
         .then((data) => {
           resolve({
             error: false,
@@ -89,6 +89,53 @@ export class RazorpayService {
     });
   }
 
+  /* 
+  Get all Order
+  */
+  async getAllOrders(job: Job): Promise<any> {
+    return new Promise((resolve, reject) => {
+      rzp.orders.all(
+        {
+          from: job.options?.where.from_date,
+          to: job.options?.where.to_date,
+          count: job.options?.where.count,
+        },
+        function (err, order) {
+          if (err) {
+            reject({
+              error: true,
+              message: "Failed to get all orders",
+              data: err,
+            });
+          } else {
+            resolve({ error: false, message: "Get All Orders", data: order });
+          }
+        }
+      );
+    });
+  }
+
+  /* 
+  Get Order by ID
+  */
+  async getOrderById(job: Job): Promise<any> {
+    return new Promise((resolve, reject) => {
+      rzp.orders.fetchPayments(
+        job.options?.where.order_id,
+        function (err, order) {
+          if (err) {
+            reject({
+              error: true,
+              message: "Failed to get order by Id",
+              data: err,
+            });
+          } else {
+            resolve({ error: false, message: "Get Order By Id", data: order });
+          }
+        }
+      );
+    });
+  }
   /* 
   Verify the payment 
   */
