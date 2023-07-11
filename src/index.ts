@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cros from "cors";
 import dotenv from "dotenv";
 import hpp from "hpp";
+import { createServer } from "http";
 
 import routes from "./api/routes/index.routes";
 import mongoConnection from "./config/mongo";
@@ -13,11 +14,14 @@ import redisClient from "./config/redis";
 import passport from "passport";
 import { jwtAuth } from "./api/modules/auth/jwt/jwt.strategy";
 import { localAuth } from "./api/modules/auth/local/local.strategy";
+//import { SocketService } from "./core/modules/socket/socket.service";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const app: Express = express();
+const server = createServer(app);
+// const socketService = new SocketService(server);
 
 app.use(helmet());
 app.use(cros());
@@ -30,6 +34,8 @@ app.use(express.static("public"));
 passport.use(jwtAuth);
 passport.use(localAuth);
 app.use(passport.initialize());
+
+// socketService.init();
 
 app.disable("x-powered-by");
 

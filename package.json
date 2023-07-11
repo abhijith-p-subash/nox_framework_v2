@@ -54,6 +54,7 @@
     "razorpay-typescript": "^1.0.12",
     "redis": "^4.6.7",
     "rimraf": "^5.0.1",
+    "socket.io": "^4.7.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
