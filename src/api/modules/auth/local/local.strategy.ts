@@ -1,10 +1,10 @@
 import passportLocal from "passport-local";
 import { UserService } from "../../user/user.service";
 import { Job } from "../../../../core/utils/job";
-import { UserModel } from "../../user/entities/user.model";
+import { User } from "../../user/entities/user.model";
 
 const LocalStrategy = passportLocal.Strategy;
-const userService = new UserService(UserModel);
+const userService = new UserService(User);
 
 export const localAuth = new LocalStrategy(async (username, password, done) => {
   const { data, error } = await userService.findOne(

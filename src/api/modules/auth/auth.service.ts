@@ -5,12 +5,12 @@ import ejs from "ejs";
 import { UserService } from "../user/user.service";
 import { JWTService } from "./jwt/jwt.service";
 import { Job } from "../../../core/utils/job";
-import { UserModel } from "../user/entities/user.model";
+import { User } from "../user/entities/user.model";
 import { EmailService } from "../../../core/modules/email/email.service";
 import { LoginLogService } from "../loginLog/loginLog.service";
 import { LoginLogModel } from "../loginLog/entity/loginLog.model";
 
-const userService = new UserService(UserModel);
+const userService = new UserService(User);
 const loginLogService = new LoginLogService(LoginLogModel);
 const jwtService = new JWTService();
 const emailService = new EmailService();

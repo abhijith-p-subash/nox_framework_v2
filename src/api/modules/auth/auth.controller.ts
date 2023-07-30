@@ -55,11 +55,11 @@ export class AuthController {
     Credentials: Username, password
     */
   async login(req: Request, res: Response) {
-    let user: { _id: number | number } | any = req.user;
-    const _id = user._id.toString();
+    let user: { id: number } | any = req.user;
+    // const _id = user._id.toString();
     const { data, error } = await authService.createUserSession(
       new Job({
-        id: _id,
+        id: user.id,
         body: req.user,
       })
     );

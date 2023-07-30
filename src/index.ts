@@ -8,6 +8,7 @@ import hpp from "hpp";
 import { createServer } from "http";
 
 import routes from "./api/routes/index.routes";
+import sequlizeConnection from "./config/database";
 import mongoConnection from "./config/mongo";
 import redisClient from "./config/redis";
 
@@ -50,6 +51,9 @@ app.get("/", (req: Request, res: Response) => {
 
 const start = async (): Promise<void> => {
   try {
+    await sequlizeConnection
+      .sync()
+      .then(() => console.log("\x1b[32m", "mySql Connected"));
     await mongoConnection().then(() => {
       console.log("\x1b[32m", "MogoDB Connected");
     });

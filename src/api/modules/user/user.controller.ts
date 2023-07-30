@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
+import { v4 as uuidv4 } from "uuid";
+
+import { queryValidation } from "./../../../core/utils/validation";
+import { NotFoundError, ValidationError } from "./../../../core/utils/errors";
+import { User } from "./entities/user.model";
 import { Job } from "../../../core/utils/job";
-import { NotFoundError, ValidationError } from "../../../core/utils/errors";
+import { UserService } from "./user.service";
 import {
   BadRequest,
   Created,
@@ -8,15 +13,13 @@ import {
   NotFound,
   Result,
 } from "../../../core/utils/response";
-import { queryValidation } from "../../../core/utils/validation";
 
-import { UserModel } from "./entities/user.model";
-import { UserService } from "./user.service";
+const userService = new UserService(User);
 
-import { v4 as uuidv4 } from "uuid";
-
-const userService = new UserService(UserModel);
 export class UserController {
+  // constructor(private userService = new UserService(User)){
+
+  // }
   /**
    * Create User
    */
@@ -102,7 +105,7 @@ export class UserController {
     const { data, error } = await userService.findById(
       new Job({
         action: "findById",
-        id: req.params.id,
+        id: +req.params.id,
         options: {
           ...queryValidation(req.query),
         },

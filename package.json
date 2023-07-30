@@ -46,6 +46,7 @@
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
+    "mysql2": "^3.5.2",
     "nodemailer": "^6.9.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
@@ -54,6 +55,8 @@
     "razorpay-typescript": "^1.0.12",
     "redis": "^4.6.7",
     "rimraf": "^5.0.1",
+    "sequelize": "^6.32.1",
+    "sequelize-typescript": "^2.1.5",
     "socket.io": "^4.7.1",
     "uuid": "^9.0.0"
   },

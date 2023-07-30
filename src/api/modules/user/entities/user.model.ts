@@ -1,47 +1,151 @@
-import { prop, getModelForClass, pre } from "@typegoose/typegoose";
-import { ParentSchema } from "../../../../core/modules/mongo/parent-schema";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  Length,
+  BeforeCreate,
+} from "sequelize-typescript";
+import sequlizeConnection from "../../../../config/database";
 import { generateHash, uuid } from "../../../../core/utils/helpers";
-import { IUser } from "./user.interface";
 
-@pre<User>("save", async function () {
-  this.uid = uuid();
-  this.active = true;
-  this.verified = false;
-  if (!!this.first_name && !!this.last_name) {
-    this.name = `${this.first_name} ${this.last_name}`;
-  }
-
-  if (!!this.password) {
-    this.password = await generateHash(this.password);
-  }
+@Table({
+  timestamps: true,
+  tableName: "users",
 })
-export class User extends ParentSchema implements IUser {
-  @prop({ type: String })
-  public uid!: string;
+export class User extends Model {
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  })
+  uid!: string;
 
-  @prop({ type: String, required: true })
-  public first_name!: string;
+  @Column({
+    type: DataType.STRING,
+    comment: "Tony",
+    allowNull: false,
+  })
+  first_name!: string;
 
-  @prop({ type: String, required: true })
-  public last_name!: string;
+  @Column({
+    type: DataType.STRING,
+    comment: "Stark",
+    allowNull: false,
+  })
+  last_name!: string;
 
-  @prop({ type: String })
-  public name!: string;
+  @Column({
+    type: DataType.STRING,
+    comment: "Tony Stark",
+    allowNull: true,
+  })
+  full_name!: string;
 
-  @prop({ type: String, required: true })
-  public email!: string;
+  @Column({
+    type: DataType.STRING,
+    comment: "tony.stark@admin.com",
+    allowNull: false,
+  })
+  email!: string;
 
-  @prop({ type: String, required: true })
-  public password!: string;
+  @Column({
+    type: DataType.STRING,
+    comment: "112233",
+    allowNull: true,
+  })
+  phone_code!: string;
 
-  @prop({ type: String, required: true })
-  public phone_code!: string;
+  @Column({
+    type: DataType.STRING,
+    comment: "9988774455",
+    allowNull: false,
+  })
+  phone!: string;
 
-  @prop({ type: String, required: true })
-  public phone!: string;
+  @Length({ min: 6 })
+  @Column({
+    type: DataType.STRING,
+    comment: "123456",
+    allowNull: false,
+  })
+  password!: string;
 
-  @prop({ type: Boolean })
-  public verified!: boolean;
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  fire_base_id!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  facebootk_id!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  google_id!: string;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: true,
+  })
+  active!: boolean;
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: true,
+  })
+  verified!: boolean;
+  @Column({
+    type: DataType.STRING || DataType.NUMBER,
+    allowNull: true,
+  })
+  created_by!: any;
+
+  @Column({
+    type: DataType.STRING || DataType.NUMBER,
+    allowNull: true,
+  })
+  updated_by!: any;
+
+  @Column({
+    type: DataType.STRING || DataType.NUMBER,
+    allowNull: true,
+  })
+  deleted_by!: any;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  last_login_at!: Date;
+
+  @Column({
+    type: DataType.DATE,
+  })
+  deletedAt!: Date;
+
+  @BeforeCreate
+  static createUID(instance: User) {
+    instance.uid = uuid();
+    instance.verified = false;
+    instance.active = true;
+  }
+
+  @BeforeCreate
+  static createFullName(instance: User) {
+    if (!!instance.first_name && !!instance.last_name)
+      instance.full_name = `${instance.first_name} ${instance.last_name}`;
+  }
+
+  @BeforeCreate
+  static async encryptPassword(instance: User) {
+    if (!!instance.password)
+      instance.password = await generateHash(instance.password);
+  }
 }
 
-export const UserModel = getModelForClass(User);
+sequlizeConnection.addModels([User]);
