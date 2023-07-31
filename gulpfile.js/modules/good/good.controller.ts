@@ -16,9 +16,6 @@ import { GoodService } from "./good.service";
 const goodService = new GoodService(Good);
 
 export class GoodController {
-  // constructor(private goodService = new GoodService(Good)){
-
-  // }
   /**
    * Create Good
    */
