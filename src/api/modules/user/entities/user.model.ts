@@ -8,12 +8,13 @@ import {
 } from "sequelize-typescript";
 import sequlizeConnection from "../../../../config/database";
 import { generateHash, uuid } from "../../../../core/utils/helpers";
+import { IUser } from "./user.interface";
 
 @Table({
   timestamps: true,
   tableName: "users",
 })
-export class User extends Model {
+export class User extends Model implements IUser {
   @Column({
     type: DataType.STRING,
     allowNull: false,
