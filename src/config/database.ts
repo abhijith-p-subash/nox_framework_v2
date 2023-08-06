@@ -1,10 +1,14 @@
 import { Sequelize } from "sequelize-typescript";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const sequlizeConnection = new Sequelize({
   dialect: "mysql",
-  host: "localhost",
-  username: "root",
-  password: "0000",
-  database: "nox",
+  host: process.env.MYSQL_HOST,
+  username: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
   logging: false,
 });
 
